@@ -21,17 +21,18 @@
         </div>
     </div>
 <!-- Script that pulls in the sidebar and handles the active page highlight -->
+   <!-- Clean, simple sidebar fetcher -->
     <script>
-        fetch('/components/sidebar.html')
+        // FIX: Changed '/components/sidebar.html' to '/squash/components/sidebar.html'
+        fetch('/squash/components/sidebar.html')
             .then(response => response.text())
             .then(data => {
                 const sidebar = document.querySelector('.sidebar');
                 sidebar.innerHTML = data;
                 
-                // Automatically finds the link matching this page and adds class="active"
-                const currentLink = sidebar.querySelector(`a[href="${window.location.pathname}"]`);
-                if (currentLink) {
-                    currentLink.classList.add('active');
+                const scripts = sidebar.getElementsByTagName('script');
+                for (let i = 0; i < scripts.length; i++) {
+                    eval(scripts[i].innerText);
                 }
             });
     </script>

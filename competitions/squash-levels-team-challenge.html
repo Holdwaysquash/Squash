@@ -23,14 +23,15 @@
     </div>
 <!-- Script that pulls in the sidebar and handles the active page highlight -->
  <!-- Clean, simple sidebar fetcher -->
+    <!-- Clean, simple sidebar fetcher -->
     <script>
-        fetch('/components/sidebar.html')
+        // FIX: Changed '/components/sidebar.html' to '/squash/components/sidebar.html'
+        fetch('/squash/components/sidebar.html')
             .then(response => response.text())
             .then(data => {
                 const sidebar = document.querySelector('.sidebar');
                 sidebar.innerHTML = data;
                 
-                // Finds the hidden script inside your sidebar file and turns it on
                 const scripts = sidebar.getElementsByTagName('script');
                 for (let i = 0; i < scripts.length; i++) {
                     eval(scripts[i].innerText);

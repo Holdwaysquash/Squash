@@ -40,33 +40,20 @@
         </footer>
     </div>
 
- <!-- Universal Script: Bypasses IDs to guarantee connection -->
+  <!-- Clean, simple sidebar fetcher -->
     <script>
-        fetch('/components/sidebar.html')
+        // FIX: Changed '/components/sidebar.html' to '/squash/components/sidebar.html'
+        fetch('/squash/components/sidebar.html')
             .then(response => response.text())
             .then(data => {
                 const sidebar = document.querySelector('.sidebar');
                 sidebar.innerHTML = data;
                 
-                // Highlight the active page link safely
-                const pageName = window.location.pathname.split('/').pop();
-                if (pageName) {
-                    const currentLink = sidebar.querySelector(`a[href*="${pageName}"]`);
-                    if (currentLink) {
-                        currentLink.classList.add('active');
-                    }
+                const scripts = sidebar.getElementsByTagName('script');
+                for (let i = 0; i < scripts.length; i++) {
+                    eval(scripts[i].innerText);
                 }
             });
-
-        // Universal Listener: Looks for ANY button element clicked inside the sidebar container
-        document.addEventListener('click', function(event) {
-            // Checks if you clicked a button inside the sidebar, ignoring the ID name completely
-            const isSidebarButton = event.target.closest('.sidebar button');
-            
-            if (isSidebarButton) {
-                document.body.classList.toggle('sidebar-collapsed');
-            }
-        });
     </script>
 
 </body>
